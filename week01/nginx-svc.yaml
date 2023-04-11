@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-svc
+  annotations:
+    service.beta.kubernetes.io/ncloud-load-balancer-layer-type: "nplb"
+    service.beta.kubernetes.io/ncloud-load-balancer-size: "SMALL"
+    service.beta.kubernetes.io/ncloud-load-balancer-internal: "true"
+spec:
+  type: LoadBalancer
+  selector:
+    app: nginx
+  ports:
+    - port: 80
+      targetPort: 80
