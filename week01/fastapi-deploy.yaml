@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world-fastapi-deploy
+spec:
+  selector:
+    matchLabels:
+      app: hello-world-fastapi
+  template:
+    metadata:
+      labels:
+        app: hello-world-fastapi
+    spec:
+      containers:
+        - name: hello-world-fastapi
+          image: noname2048/hello-world-fastapi
+          # resources:
+          #   limits:
+          #     memory: "128Mi"
+          #     cpu: "500m"
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-world-fastapi-clusterip
+spec:
+  selector:
+    app: hello-world-fastapi
+  ports:
+    - port: 80
+      targetPort: 8080

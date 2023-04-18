@@ -1,0 +1,55 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hello-world-ingress
+  labels:
+    name: hello-world-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+    - host: fastapi.papperbottle.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: hello-world-fastapi-clusterip
+                port:
+                  number: 80
+    - host: koa.papperbottle.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: hello-world-koa-clusterip
+                port:
+                  number: 80
+    - http:
+        paths:
+          - pathType: Prefix
+            path: "/fastapi"
+            backend:
+              service:
+                name: hello-world-fastapi-clusterip
+                port:
+                  number: 80
+          - pathType: Prefix
+            path: "/koa"
+            backend:
+              service:
+                name: hello-world-koa-clusterip
+                port:
+                  number: 80
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: nginx-svc
+                port:
+                  number: 80
