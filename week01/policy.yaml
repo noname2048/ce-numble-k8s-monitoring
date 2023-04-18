@@ -1,0 +1,12 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: hello-world-fastapi-policy
+spec:
+  podSelector:
+    matchLabels:
+      app: hello-world-fastapi
+  ingress:
+    - {}
+  egress:
+    - {}
