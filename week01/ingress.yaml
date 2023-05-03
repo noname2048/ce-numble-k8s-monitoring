@@ -7,8 +7,19 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: "nginx"
     ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod-cluster-issuer"
 spec:
+  tls:
+    - hosts:
+        - fastapi.papperbottle.com
+      secretName: fastapi-tls
+    - hosts:
+        - koa.papperbottle.com
+      secretName: koa-tls
+    - hosts:
+        - *.papperbottle.com
+      secretName: papperbottle-tls
   rules:
     - host: fastapi.papperbottle.com
       http:
