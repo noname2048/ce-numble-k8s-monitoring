@@ -5,3 +5,4 @@ metadata:
   namespace: mychart
 data:
   myvalue: "Hello World"
+  food: {{ .Values.favorite.food}}
